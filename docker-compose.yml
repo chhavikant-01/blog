@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5435:5432"
+    restart: always
+    environment:
+      - password=changemeinprod!
+  
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8888:8080"
+    restart: always

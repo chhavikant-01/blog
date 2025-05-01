@@ -6,6 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.nova.blog.domain.dtos.ApiErrorResponse;
 
@@ -57,5 +58,14 @@ public class ErrorController {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNoResourceFoundException(NoResourceFoundException ex) {
+        ApiErrorResponse error = ApiErrorResponse.builder()
+            .status(HttpStatus.NOT_FOUND.value())
+            .message("The requested resource was not found")
+            .build();
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
 }
